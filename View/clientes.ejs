@@ -1,0 +1,40 @@
+<%- include('header'); %>
+
+   <body>
+      <h1>Clientes</h1>
+         <% if(dados == null || dados == '') {%>
+         
+               <h1> Sem dados .....</h1>
+            <% } else{%>
+         <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID </th>
+                <th scope="col">Nome</th>
+                <th scope="col">Endereco</th>
+                <th scope="col">Opções</th>
+              </tr>
+            </thead>
+            <tbody>
+               <% dados.forEach(function(retorno) { %>
+                  <tr>
+                  
+                     <td><%= retorno.id %></td>
+                     <td><a href="/clientes/<%-retorno.id%>"><%= retorno.nome %></a></td>
+                     <td><%= retorno.endereco %></td>
+                     <td><form method="POST" action="/clientes/<%-retorno.id%>/delete" enctype="application/x-www-form-urlencoded">
+                        
+                        <input type="hidden" name="_method"value="DELETE">
+                        <button class="btn btn-danger" type="submit" onclick="return confirm('Deseja apagar <%=retorno.nome%>> ?')">Deletar</button></form></td>
+                   </tr>
+              
+                  <% }) %>
+           
+              <% } %>
+        
+            </tbody>
+       
+
+
+
+   </body>

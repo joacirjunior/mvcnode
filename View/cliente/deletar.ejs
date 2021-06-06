@@ -1,0 +1,27 @@
+<%- include('../header'); %>
+<script>
+  
+$(window).load(function() {
+  $('#modal_excluir').modal({backdrop: 'static', keyboard: false}) 
+  $('#modal_excluir').modal('show');
+});
+  
+</script>
+<div class="modal fade" tabindex="-1" id="modal_excluir" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Deletar Cliente <%=dados[0].nome %> ? </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <a href="/clientes" class="btn btn-secondary"  >Cancelar</a>
+          <a  href="/clientes/<%=dados[0].id%>/delete" class="btn btn-primary">Save changes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

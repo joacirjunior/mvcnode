@@ -1,0 +1,19 @@
+<%- include('../header'); %>
+<body>
+    <form class="row g-3" method="POST" action="/clientes/cadastrando">
+        <div class="col-md-6">
+          <label for="cliente_nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="cliente_nome" name="cliente_nome" placeholder="Nome">
+        </div>
+        <div class="col-md-6">
+          <label for="cliente_cidade" class="form-label">Cidade</label>
+          <input type="text" class="form-control" id="cliente_cidade" name="cliente_cidade" placeholder="Nome da Cidade">
+        </div>
+        <div class="col-12">
+          <label for="cliente_obs" class="form-label">Observação</label>
+          <input type="text" class="form-control" id="cliente_obs" placeholder="Observações" name="cliente_obs">
+        </div>
+        <button type="submit" class="btn btn-success">Enviar</button>
+      </form>
+
+</body>
