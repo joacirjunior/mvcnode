@@ -1,6 +1,7 @@
 var modelCliente = require("../Models/modelCliente");
 var retorno = '';
 var detalheRetorno = '';
+
 module.exports.index = async (req, res) => {
   // modalcliente = new modelCliente()
 
@@ -66,9 +67,28 @@ module.exports.cadastro = async (req,res)=>{
 
 
 module.exports.cadastrando = async (req,res)=>{
+  const path = require('path');
+  const util = require('util');
+
+  const file = req.files.clientes_avatar
+  const filename  = file.name;
+  const size = file.size;
+  const extension = path.extname(filename)
+
+  const extensaoliberada = /png|jpeg|jpg|gif/;
+
+  if(!extensaoliberada.test(extension)) throw "Extensao não suportada";
+  if(size > 80000) throw "Arquivo Muito Grande";
+  const md5 = file.md5;
+  const URL = "./imgs/" + md5 + extension;
+  
+  await util.promisify(file.mv)(URL);
+
  var nome_cliente =  req.body.cliente_nome
  var endereco_cliente =  req.body.cliente_cidade
  var obs_cliente =  req.body.cliente_obs
+
+ console.log(URL);
 
  modelCliente.insert(nome_cliente,endereco_cliente,obs_cliente)
 //  console.log(nome_cliente , endereco_cliente , obs_cliente)

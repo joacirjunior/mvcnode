@@ -5,12 +5,13 @@ var app = express();
 var methodOverride = require('method-override')
 
 var ControleCliente = require("./Controller/ControleCliente");
-
+var fileUpload = require('express-fileupload');
 
 const path = require('path');
 
 
-
+app.use(express.static(path.join(__dirname + '/public')));
+app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride(function (req, res) {

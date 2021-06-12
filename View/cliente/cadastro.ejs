@@ -1,6 +1,6 @@
 <%- include('../header'); %>
 <body>
-    <form class="row g-3" method="POST" action="/clientes/cadastrando">
+    <form class="row g-3" method="POST" action="/clientes/cadastrando" encType="multipart/form-data">
         <div class="col-md-6">
           <label for="cliente_nome" class="form-label">Nome</label>
           <input type="text" class="form-control" id="cliente_nome" name="cliente_nome" placeholder="Nome">
@@ -12,6 +12,10 @@
         <div class="col-12">
           <label for="cliente_obs" class="form-label">Observação</label>
           <input type="text" class="form-control" id="cliente_obs" placeholder="Observações" name="cliente_obs">
+        </div>
+        <div class="col-12">
+          <label for="clientes_avatar" class="form-label">Imagem</label>
+          <input type="file" class="form-control" id="clientes_avatar" placeholder="Observações" name="clientes_avatar">
         </div>
         <button type="submit" class="btn btn-success">Enviar</button>
       </form>
