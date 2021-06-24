@@ -2,6 +2,7 @@ var modelCliente = require("../Models/modelCliente");
 var retorno = '';
 var detalheRetorno = '';
 
+ // INDEX CLIENTE
 module.exports.index = async (req, res) => {
   // modalcliente = new modelCliente()
 
@@ -40,6 +41,9 @@ setTimeout(()=>{
 
 }
 
+// DETALHES DE CLIENTE
+
+
 module.exports.detalhes = async (req,res)=>{
   var id =  req.params.id
   try {
@@ -56,6 +60,9 @@ module.exports.detalhes = async (req,res)=>{
   },400)
 }
 
+
+//TELA DE CADASTRO
+
 module.exports.cadastro = async (req,res)=>{
 
 
@@ -65,6 +72,8 @@ module.exports.cadastro = async (req,res)=>{
 
 }
 
+
+//FORM CADASTRO CLIENTE
 
 module.exports.cadastrando = async (req,res)=>{
   const path = require('path');
@@ -80,17 +89,18 @@ module.exports.cadastrando = async (req,res)=>{
   if(!extensaoliberada.test(extension)) throw "Extensao não suportada";
   if(size > 80000) throw "Arquivo Muito Grande";
   const md5 = file.md5;
-  const URL = "./imgs/" + md5 + extension;
-  
+  const URL = "public/imgs/" + md5 + extension;
+  const caminho = "../imgs/" + md5 + extension;
   await util.promisify(file.mv)(URL);
 
  var nome_cliente =  req.body.cliente_nome
  var endereco_cliente =  req.body.cliente_cidade
  var obs_cliente =  req.body.cliente_obs
+ var img_avatar = caminho;
 
- console.log(URL);
+ //console.log(URL);
 
- modelCliente.insert(nome_cliente,endereco_cliente,obs_cliente)
+ modelCliente.insert(nome_cliente,endereco_cliente,obs_cliente,img_avatar)
 //  console.log(nome_cliente , endereco_cliente , obs_cliente)
   setTimeout(()=>{
     res.redirect('/clientes');
@@ -98,6 +108,8 @@ module.exports.cadastrando = async (req,res)=>{
 
 }
 
+
+// DELETAR CLIENTE
 module.exports.delete = async (req,res)=>{
   var id = req.params.id
 

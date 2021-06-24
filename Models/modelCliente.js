@@ -28,7 +28,7 @@ module.exports.showCliente = () => {
 
 module.exports.detalheCliente = (id) =>
 {
-  var sql = "SELECT id,nome,endereco FROM clientes where id=?"
+  var sql = "SELECT id,nome,endereco,avatar FROM clientes where id=?"
   var idRetorno = id;
   return new Promise((resolve, reject) => {
 
@@ -50,11 +50,11 @@ module.exports.detalheCliente = (id) =>
   })
 }
 
-module.exports.insert = (nome_cliente, endereco_cliente, obs_cliente)=>{
+module.exports.insert = (nome_cliente, endereco_cliente, obs_cliente, img_avatar)=>{
 
-  var sql = "INSERT INTO clientes (nome,endereco,observacao) VALUES ?"
+  var sql = "INSERT INTO clientes (nome,endereco,observacao,avatar) VALUES ?"
   var values = [
-    [nome_cliente, endereco_cliente,obs_cliente],
+    [nome_cliente, endereco_cliente,obs_cliente,img_avatar],
     
   ];
   return new Promise((resolve, reject) => {

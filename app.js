@@ -2,14 +2,17 @@ var express = require('express');
 var http = require('http');
 namespace = require('express-namespace');
 var app = express();
-var methodOverride = require('method-override')
+var methodOverride = require('method-override');
 
 var ControleCliente = require("./Controller/ControleCliente");
+var ControllerHome = require('./Controller/ControllerHome');
+var ControllerLogin = require('./Controller/ControllerLogin');
+
 var fileUpload = require('express-fileupload');
-
 const path = require('path');
-
-
+var md5 = require('md5');
+var session = require('express-session');
+//MINDDWARES
 app.use(express.static(path.join(__dirname + '/public')));
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
@@ -22,16 +25,24 @@ app.use(methodOverride(function (req, res) {
       return method
     }
   }))
+
+  const Susuario = md5("Login de Usuario");
+  app.set('trust proxy', 1) // trust first proxy
+  app.use(session({
+    secret: Susuario,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }))
+
+//SETS
 app.set('views', path.join(__dirname, 'View'));
 app.set('view engine', 'ejs');
 
+//INICIO DAS ROTAS
 
-
-app.get('/', function (req, res, next) {
-    res.render('index', {
-        title: 'Bem vindo ao APP'
-    });
-});
+app.get('/',ControllerHome.index)
+app.get('/login',ControllerLogin.index)
 
 app.namespace('/clientes', function() {
 
