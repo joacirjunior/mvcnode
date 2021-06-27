@@ -93,6 +93,32 @@ module.exports.delete = (id)=>{
  
 }
 
+module.exports.login = (email,senha)=>{
+
+  var sql = "SELECT id,nome FROM clientes where email_cliente=? and senha_cliente=? "
+  var email_login = email;
+  var senha_login = senha;
+  return new Promise((resolve, reject) => {
+
+    db.query(sql,[email_login,senha_login], (err, result) => {
+      if (err) throw console.log("Erro no momento da Consulta " + err);
+
+      //resultado = JSON.parse(JSON.stringify(result))
+
+      if (result === undefined || result == null || result == '' || result == 0) {
+        resolve(result)
+      } else {
+
+        retornoDetalha = result
+        resolve(retornoDetalha)
+      }
+
+    })
+
+  })
+
+}
+
 
 
 //module.exports = clienteModal;

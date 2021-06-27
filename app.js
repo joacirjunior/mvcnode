@@ -32,7 +32,7 @@ app.use(methodOverride(function (req, res) {
     secret: Susuario,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: true, maxAge: 600000 }
   }))
 
 //SETS
@@ -40,10 +40,13 @@ app.set('views', path.join(__dirname, 'View'));
 app.set('view engine', 'ejs');
 
 //INICIO DAS ROTAS
+//Rotas de Autenticação
 
-app.get('/',ControllerHome.index)
-app.get('/login',ControllerLogin.index)
+app.get('/',ControllerHome.index);
+app.get('/login',ControllerLogin.index);
+app.post('/autenticalogin',ControllerLogin.autenticador);
 
+//Rotas de Clientes
 app.namespace('/clientes', function() {
 
     app.get('/', ControleCliente.index);
