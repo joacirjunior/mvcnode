@@ -6,7 +6,8 @@ var detalheRetorno = '';
 module.exports.index = async (req, res) => {
   // modalcliente = new modelCliente()
 
-
+if(req.session.logado)
+{
   try {
     modelCliente.showCliente().then(async function (resultado) {
       retorno = resultado
@@ -17,27 +18,17 @@ module.exports.index = async (req, res) => {
   } catch (error) {
     console.log(error)
   }
-
-/*  if (typeof (retorno) === "undefined" || retorno == "" || retorno == null) {
-
-    console.log("Veio indefinido" + typeof (retorno))
-
-  } else {
-    console.log("Valor Correto" + retorno)
-  }
-
-*/
-
  
 
 
 setTimeout(()=>{
   res.render('clientes', { title: "Clientes", dados: retorno });
 },400)
+}else{
+  res.redirect("/login")
+}
 
 
-  //console.log();
-  //console.log("Teste")
 
 }
 
@@ -45,30 +36,41 @@ setTimeout(()=>{
 
 
 module.exports.detalhes = async (req,res)=>{
-  var id =  req.params.id
-  try {
-    modelCliente.detalheCliente(id).then(async function (resultado) {
-        detalheRetorno = resultado
-  
-      })
-  } catch (error) {
+  if(req.session.logado)
+  {
+    var id =  req.params.id
+    try {
+      modelCliente.detalheCliente(id).then(async function (resultado) {
+          detalheRetorno = resultado
     
+        })
+    } catch (error) {
+      
+    }
+   // console.log(detalheRetorno)
+    setTimeout(()=>{
+      res.render('cliente/detalhesClientes', { title: "Clientes", dados: detalheRetorno });
+    },400)
+  }else{
+    res.redirect("/login")
   }
- // console.log(detalheRetorno)
-  setTimeout(()=>{
-    res.render('cliente/detalhesClientes', { title: "Clientes", dados: detalheRetorno });
-  },400)
+
 }
 
 
 //TELA DE CADASTRO
 
 module.exports.cadastro = async (req,res)=>{
-
-
+if(req.session.logado)
+{
   setTimeout(()=>{
     res.render('cliente/cadastro', { title: "Cadastro de Clientes", dados: null });
   },400)
+}else{
+  res.redirect("/login")
+}
+
+  
 
 }
 
@@ -76,7 +78,9 @@ module.exports.cadastro = async (req,res)=>{
 //FORM CADASTRO CLIENTE
 
 module.exports.cadastrando = async (req,res)=>{
-  const path = require('path');
+  if(req.session.logado)
+  {
+    const path = require('path');
   const util = require('util');
 
   const file = req.files.clientes_avatar
@@ -106,21 +110,34 @@ module.exports.cadastrando = async (req,res)=>{
     res.redirect('/clientes');
   },400)
 
+  }else{
+    res.redirect("/login")
+  }
+  
+
 }
 
 
 // DELETAR CLIENTE
 module.exports.delete = async (req,res)=>{
-  var id = req.params.id
 
-modelCliente.delete(id);
+  if(req.session.logado)
+  {
 
-  
-    setTimeout(()=>{
-      //res.send(req)
-      res.redirect('/clientes')
-    },400)
-  
+    var id = req.params.id
+
+    modelCliente.delete(id);
+    
+      
+        setTimeout(()=>{
+          //res.send(req)
+          res.redirect('/clientes')
+        },400)
+      
+  }else{
+    res.redirect("/login")
+  }
+
 
   //console.log(req)
 

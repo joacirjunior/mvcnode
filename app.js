@@ -1,17 +1,43 @@
 var express = require('express');
-var http = require('http');
+
+
+var https = require('https');
 namespace = require('express-namespace');
+
 var app = express();
 var methodOverride = require('method-override');
 
 var ControleCliente = require("./Controller/ControleCliente");
-var ControllerHome = require('./Controller/ControllerHome');
 var ControllerLogin = require('./Controller/ControllerLogin');
 
 var fileUpload = require('express-fileupload');
 const path = require('path');
 var md5 = require('md5');
 var session = require('express-session');
+
+
+const fs = require('fs');
+const key = fs.readFileSync('./key.pem');
+const cert = fs.readFileSync('./cert.pem');
+
+var MySQLStore = require('express-mysql-session')(session);
+var options = {
+	host: '192.168.18.128',
+	port: 3306,
+	user: 'root',
+	password: 'P@z20102010',
+	database: 'projeto',
+	schema: {
+		tableName: 'sessions',
+		columnNames: {
+			session_id: 'session_id',
+			expires: 'expires',
+			data: 'data'
+		}
+	}
+};
+
+var sessionStore = new MySQLStore(options);
 //MINDDWARES
 app.use(express.static(path.join(__dirname + '/public')));
 app.use(fileUpload());
@@ -30,21 +56,39 @@ app.use(methodOverride(function (req, res) {
   app.set('trust proxy', 1) // trust first proxy
   app.use(session({
     secret: Susuario,
+    name:"loginuser",
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true, maxAge: 600000 }
+    unset:'destroy',
+    store: sessionStore,
+    saveUninitialized: false,
+    cookie: {segure:true,maxAge: 60,expires:false}
   }))
-
+  
 //SETS
 app.set('views', path.join(__dirname, 'View'));
 app.set('view engine', 'ejs');
 
 //INICIO DAS ROTAS
-//Rotas de Autenticação
 
-app.get('/',ControllerHome.index);
+
+
+//Rotas de Autenticação
 app.get('/login',ControllerLogin.index);
+app.get('/logout',ControllerLogin.logout);
+app.get('/',ControllerLogin.home);
+app.get('/index',ControllerLogin.home);
 app.post('/autenticalogin',ControllerLogin.autenticador);
+
+
+
+
+
+
+
+
+
+
+
 
 //Rotas de Clientes
 app.namespace('/clientes', function() {
@@ -77,4 +121,4 @@ app.get('/clientes',function(req,res,next){
 });*/
 
 //module.exports =  app;
-http.createServer(app).listen(8000);
+https.createServer({key: key, cert: cert },app).listen(8000);
