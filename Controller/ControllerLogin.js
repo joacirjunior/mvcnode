@@ -32,7 +32,7 @@ module.exports.autenticador = async (req, res) => {
                 
 
 
-                console.log(req.session)
+                //console.log(req.session)
 
 
 

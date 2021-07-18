@@ -19,7 +19,7 @@
     "mongoose": "^5.13.2",
     "mysql": "^2.18.1",
     "node": "^16.4.0",
-    "nodemon": "^2.0.9",
+    "nodemon": "^2.0.12",
     "promise-redis": "^0.0.5",
     "redis": "^3.1.2",
     "socket.io": "^4.1.1",

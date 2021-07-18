@@ -28,7 +28,7 @@ module.exports.showCliente = () => {
 
 module.exports.detalheCliente = (id) =>
 {
-  var sql = "SELECT id,nome,endereco,avatar FROM clientes where id=?"
+  var sql = "SELECT id,nome,endereco,observacao,avatar FROM clientes where id=?"
   var idRetorno = id;
   return new Promise((resolve, reject) => {
 
@@ -116,6 +116,34 @@ module.exports.login = (email,senha)=>{
     })
 
   })
+
+}
+
+module.exports.editar = (id_edit,nome_cliente, endereco_cliente, obs_cliente)=>{
+  
+    var sql = "UPDATE clientes SET nome=?,endereco=?,observacao=? WHERE  id=?;"
+    return new Promise((resolve, reject) => {
+  
+      db.query(sql,[nome_cliente, endereco_cliente,obs_cliente,id_edit], (err, result) => {
+        if (err) throw console.log("Erro no momento da Consulta " + err);
+  
+        //resultado = JSON.parse(JSON.stringify(result))
+  
+        if (result === undefined || result == null || result == '') {
+  
+        } else {
+  
+          resolve("Dados Inseridos com Sucesso")
+        }
+  
+      })
+  
+    })
+  
+  
+
+ 
+ 
 
 }
 

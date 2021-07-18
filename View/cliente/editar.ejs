@@ -1,0 +1,20 @@
+<%- include('../header'); %>
+<body>
+    <form class="row g-3" method="POST" action="/clientes/<%=dados[0].id%>/editando" encType="multipart/form-data">
+      <input type="hidden" name="_method"value="PUT">  
+      <div class="col-md-6">
+          <label for="cliente_nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="cliente_nome" name="cliente_nome" placeholder="Nome" value="<%=dados[0].nome%>">
+        </div>
+        <div class="col-md-6">
+          <label for="cliente_cidade" class="form-label">Cidade</label>
+          <input type="text" class="form-control" id="cliente_cidade" name="cliente_cidade" placeholder="Nome da Cidade" value="<%=dados[0].endereco%>">
+        </div>
+        <div class="col-12">
+          <label for="cliente_obs" class="form-label">Observação</label>
+          <input type="text" class="form-control" id="cliente_obs" placeholder="Observações" name="cliente_obs" value="<%=dados[0].observacao%>">
+        </div>
+        <button type="submit" class="btn btn-success">Enviar</button><a class="btn btn-primary" href="/clientes">Voltar</a>
+      </form>
+
+</body>
