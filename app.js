@@ -22,10 +22,10 @@ const cert = fs.readFileSync('./cert.pem');
 
 var MySQLStore = require('express-mysql-session')(session);
 var options = {
-  host: '192.168.18.128',
+  host: '',
   port: 3306,
   user: 'root',
-  password: 'P@z20102010',
+  password: '',
   database: 'projeto',
   schema: {
     tableName: 'sessions',
